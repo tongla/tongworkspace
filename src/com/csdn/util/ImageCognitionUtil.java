@@ -117,8 +117,8 @@ public class ImageCognitionUtil {
 					}
 					if ((yes / pxSearch.getPxCount()) > pxPercent) {
 						ImageXyBean img = new ImageXyBean();
-						img.x = x;
-						img.y = y;
+						img.x = x+pxSXMax/2;
+						img.y = y+pxSYMax/2;
 						list.add(img);
 					}
 				}

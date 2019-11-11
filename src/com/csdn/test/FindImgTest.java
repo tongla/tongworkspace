@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.csdn.test;
 
 import java.awt.Color;
@@ -10,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,8 +37,8 @@ public class FindImgTest {
 //			int h = (int) screenSize.getHeight();
 			
 			//自定义截图的大小
-			int w = 700;
-			int h = 300;
+			//int w = 700;
+			//int h = 300;
 
 			Robot robot = new Robot();
 			//全屏截图
@@ -53,7 +52,7 @@ public class FindImgTest {
 			InputStream inputStream = new FileInputStream("image/findImg.png");
 			BufferedImage searchImg = ImageIO.read(inputStream);//将要查找的本地图读到BufferedImage
 
-			//图片识别工具类
+
 			ImageCognitionUtil ic = new ImageCognitionUtil();
 
 			List<ImageXyBean> list = ic.imageSearch(screenImg, searchImg, ImageCognitionUtil.SIM_ACCURATE_VERY);
@@ -61,19 +60,25 @@ public class FindImgTest {
 			if( list.size() > 0 ) {
 				for (ImageXyBean imgXy : list) { 
 					System.out.println("查找完毕---坐标是" + imgXy.x + "," + imgXy.y);
-					
+					robot.mouseMove(imgXy.x,imgXy.y);
+					System.out.println("单击");
+					robot.mousePress(InputEvent.BUTTON1_MASK);
+					robot.mouseRelease(InputEvent.BUTTON1_MASK);
+
+
 					//把找到的图标记一下
-					Graphics g = screenImg.getGraphics();
+					/*Graphics g = screenImg.getGraphics();
 					g.setColor(Color.red);
 					g.drawRect(imgXy.x, imgXy.y, searchImg.getWidth(), searchImg.getHeight());
 					g.setFont(new Font("微软雅黑", Font.BOLD, 16));
 					g.drawString("←找到的图片在这里", imgXy.x + searchImg.getWidth() + 10,
 							imgXy.y + searchImg.getHeight() / 2 + 10);
 					out = new FileOutputStream("image/resultImg.png");
-					ImageIO.write(screenImg, "png", out);
+					ImageIO.write(screenImg, "png", out);*/
 
 				}
 			}else {
+
 				System.out.println("没找到");
 			}
 		} catch (Exception e) {
